@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.chartjs.mapper.LoginMapper">
+
+
+	<!-- 로그인 -->
+	<select id="login"
+		parameterType="com.example.chartjs.dto.Member"
+		resultType="com.example.chartjs.dto.Member">
+		SELECT
+		id AS id,
+		pw AS Pw
+		FROM member
+		WHERE
+		id = #{id}
+		AND
+		pw =
+		#{pw}
+	</select>
+	<!-- 휴면 -->
+	<!-- 1년이상 접속안한 사람 조회 -->
+	<select id="selectSleepingMembers" resultType="com.example.chartjs.dto.Member">
+    SELECT m.id, m.email
+    FROM member m
+    LEFT JOIN (
+        SELECT id, MAX(logindate) AS last_login
+        FROM login_history
+        GROUP BY id
+    ) lh ON m.id = lh.id
+    WHERE (lh.last_login IS NULL OR lh.last_login &lt; DATE_SUB(NOW(), INTERVAL 1 YEAR))
+    AND m.active = 'ON'
+</select>
+
+	<!-- 휴면으로 전환 -->
+	<update id="changeMemberActiveToOff" parameterType="String">
+		UPDATE member
+		SET active = 'OFF'
+		WHERE id = #{id}
+	</update>
+	<!-- 로그인 이력 추가 -->
+	<insert id="insertLoginHistory" parameterType="String">
+		INSERT INTO login_history (id)
+		VALUES (#{id})
+	</insert>
+
+	<select id="selectLoginHistory" parameterType="string"
+		resultType="java.util.Date">
+		SELECT logindate
+		FROM login_history
+		WHERE id = #{id}
+		ORDER BY logindate DESC
+	</select>
+</mapper>
