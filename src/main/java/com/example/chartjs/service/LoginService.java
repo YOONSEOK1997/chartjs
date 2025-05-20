@@ -36,6 +36,16 @@ public class LoginService implements ILoginService {
 	 public List<Date> selectLoginHistory(String id) {
 	     return loginMapper.selectLoginHistory(id);
 	 }
+	@Override
+	public void changeMemberActiveToOff(String id) {
+		 loginMapper.changeMemberActiveToOff(id);
+		
+	}
+	@Override
+	public List<Member> selectSleepingMembers() {
+		// TODO Auto-generated method stub
+		return loginMapper.selectSleepingMembers();
+	}
 	
 }
 

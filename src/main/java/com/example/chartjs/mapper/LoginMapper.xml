@@ -7,15 +7,11 @@
 	<select id="login"
 		parameterType="com.example.chartjs.dto.Member"
 		resultType="com.example.chartjs.dto.Member">
-		SELECT
-		id AS id,
-		pw AS Pw
+		SELECT id AS id, pw AS Pw
 		FROM member
 		WHERE
 		id = #{id}
-		AND
-		pw =
-		#{pw}
+		AND pw = #{pw}
 	</select>
 	<!-- 휴면 -->
 	<!-- 1년이상 접속안한 사람 조회 -->

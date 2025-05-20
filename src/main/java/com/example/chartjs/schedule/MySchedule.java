@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.chartjs.dto.Member;
 import com.example.chartjs.mapper.LoginMapper;
+import com.example.chartjs.service.LoginService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,15 +23,15 @@ public class MySchedule {
     private JavaMailSender javaMailSender;
 
     @Autowired
-    private LoginMapper loginMapper;
-    @Scheduled(cron = "0 * * * * *") // 테스트용 ) 매 분 
-   // @Scheduled(cron = "0 59 23 25 * *")
+    private LoginService loginService;
+   @Scheduled(cron = "0 * * * * * " ) //test용 매 분 실행
+  //  @Scheduled(cron = "0 59 23 25 * *")
     public void findSleepingMembers() {
-        List<Member> sleepingMembers = loginMapper.selectSleepingMembers();
+        List<Member> sleepingMembers = loginService.selectSleepingMembers();
 
         for (Member member : sleepingMembers) {
-            loginMapper.changeMemberActiveToOff(member.getId());
-
+            loginService.changeMemberActiveToOff(member.getId());
+           
             SimpleMailMessage msg = new SimpleMailMessage();
             msg.setFrom("admin@localhost.com");
             msg.setTo(member.getEmail());

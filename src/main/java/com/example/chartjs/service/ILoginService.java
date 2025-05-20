@@ -13,8 +13,9 @@ public interface ILoginService {
 
 	void saveLoginHistory(String id);
 
-
-
 	List<Date> selectLoginHistory(String id);
 	
+	void changeMemberActiveToOff(String id);
+
+	List<Member> selectSleepingMembers();
 }
