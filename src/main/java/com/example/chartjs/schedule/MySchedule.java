@@ -25,7 +25,7 @@ public class MySchedule {
     private LoginMapper loginMapper;
     @Scheduled(cron = "0 * * * * *") // 테스트용 ) 매 분 
    // @Scheduled(cron = "0 59 23 25 * *")
-    public void deactivateDormantMembers() {
+    public void findSleepingMembers() {
         List<Member> sleepingMembers = loginMapper.selectSleepingMembers();
 
         for (Member member : sleepingMembers) {

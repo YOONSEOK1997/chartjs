@@ -19,17 +19,19 @@
 	</select>
 	<!-- 휴면 -->
 	<!-- 1년이상 접속안한 사람 조회 -->
-	<select id="selectSleepingMembers" resultType="com.example.chartjs.dto.Member">
-    SELECT m.id, m.email
-    FROM member m
-    LEFT JOIN (
-        SELECT id, MAX(logindate) AS last_login
-        FROM login_history
-        GROUP BY id
-    ) lh ON m.id = lh.id
-    WHERE (lh.last_login IS NULL OR lh.last_login &lt; DATE_SUB(NOW(), INTERVAL 1 YEAR))
-    AND m.active = 'ON'
-</select>
+	<select id="selectSleepingMembers"
+		resultType="com.example.chartjs.dto.Member">
+		SELECT m.id, m.email
+		FROM member m
+		LEFT JOIN (
+		SELECT id, MAX(logindate) AS last_login
+		FROM login_history
+		GROUP BY id
+		) lh ON m.id = lh.id
+		WHERE (lh.last_login IS NULL OR lh.last_login &lt; DATE_SUB(NOW(), INTERVAL
+		1 YEAR))
+		AND m.active = 'ON'
+	</select>
 
 	<!-- 휴면으로 전환 -->
 	<update id="changeMemberActiveToOff" parameterType="String">
@@ -39,7 +41,8 @@
 	</update>
 	<!-- 로그인 이력 추가 -->
 	<insert id="insertLoginHistory" parameterType="String">
-		INSERT INTO login_history (id)
+		INSERT INTO
+		login_history (id)
 		VALUES (#{id})
 	</insert>
 
@@ -48,6 +51,7 @@
 		SELECT logindate
 		FROM login_history
 		WHERE id = #{id}
-		ORDER BY logindate DESC
+		ORDER BY
+		logindate DESC
 	</select>
 </mapper>

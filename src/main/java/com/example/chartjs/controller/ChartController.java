@@ -22,37 +22,37 @@ import lombok.extern.slf4j.Slf4j;
 
 public class ChartController {
 	@Autowired ILoginService loginService;
-	
-	
+
+
 	@GetMapping({"/","/login"})
 	public String login(){
 		return "login";
 	}
 	@PostMapping("/login")
 	public String login(
-	        HttpSession session,
-	        @ModelAttribute Member member,
-	        HttpServletResponse response,
-	        Model model
-	) {
-	    Member loginMember = loginService.login(member);
+			HttpSession session,
+			@ModelAttribute Member member,
+			HttpServletResponse response,
+			Model model
+			) {
+		Member loginMember = loginService.login(member);
 
-	    if (loginMember == null) {
-	        model.addAttribute("error", "아이디 또는 비밀번호가 일치하지 않습니다.");
-	        return "login";
-	    }
+		if (loginMember == null) {
+			model.addAttribute("error", "아이디 또는 비밀번호가 일치하지 않습니다.");
+			return "login";
+		}
 
-	    session.setAttribute("loginMember", loginMember);
-	    loginService.saveLoginHistory(loginMember.getId());
+		session.setAttribute("loginMember", loginMember);
+		loginService.saveLoginHistory(loginMember.getId());
 
-	    List<Date> loginHistory = loginService.selectLoginHistory(loginMember.getId());
-	    model.addAttribute("loginHistory", loginHistory);
+		List<Date> loginHistory = loginService.selectLoginHistory(loginMember.getId());
+		model.addAttribute("loginHistory", loginHistory);
 
-	    return "login"; 
+		return "login"; 
 	}
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-	    session.invalidate(); // 세션 초기화
-	    return "redirect:/login"; // 로그인 페이지로 이동
+		session.invalidate(); // 세션 초기화
+		return "redirect:/login"; // 로그인 페이지로 이동
 	}
 }

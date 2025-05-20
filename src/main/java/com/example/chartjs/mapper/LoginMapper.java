@@ -18,6 +18,6 @@ public interface LoginMapper {
 	void changeMemberActiveToOff(String id);
 
 	List<Member> selectSleepingMembers();
-	
+
 
 }
