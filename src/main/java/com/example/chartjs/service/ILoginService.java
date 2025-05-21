@@ -23,6 +23,4 @@ public interface ILoginService {
 	void changePw(Member member);
 	
 	void deleteOldPwHistory();
-
-
 }

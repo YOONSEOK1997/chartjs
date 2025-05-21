@@ -60,12 +60,12 @@
     INSERT INTO pw_history (id, pw)
     VALUES (#{id}, #{pw})
 	</insert>
-	<!-- resources/mappers/LoginMapper.xml -->
+
 	<!-- 오래된 비밀번호 이력 삭제 (5개가 넘어갈시) -->
 <delete id="deleteOldPwHistory">
    DELETE FROM pw_history
-WHERE (id, change_date) IN (
-    SELECT id, change_date FROM (
+   WHERE (id, change_date) IN (
+   	SELECT id, change_date FROM (
         SELECT id, change_date,
                ROW_NUMBER() OVER (PARTITION BY id ORDER BY change_date DESC) AS rn
         FROM pw_history
