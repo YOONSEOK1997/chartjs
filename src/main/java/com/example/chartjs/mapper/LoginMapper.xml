@@ -50,4 +50,34 @@
 		ORDER BY
 		logindate DESC
 	</select>
+	
+	<update id="changePw" parameterType="com.example.chartjs.dto.Member">
+		UPDATE member
+		SET pw = #{pw}
+		WHERE id = #{id}
+	</update>
+	<insert id="insertPwHistory" parameterType="com.example.chartjs.dto.PwHistory">
+    INSERT INTO pw_history (id, pw)
+    VALUES (#{id}, #{pw})
+	</insert>
+	<!-- resources/mappers/LoginMapper.xml -->
+	<!-- 오래된 비밀번호 이력 삭제 (5개가 넘어갈시) -->
+<delete id="deleteOldPwHistory">
+   DELETE FROM pw_history
+WHERE (id, change_date) IN (
+    SELECT id, change_date FROM (
+        SELECT id, change_date,
+               ROW_NUMBER() OVER (PARTITION BY id ORDER BY change_date DESC) AS rn
+        FROM pw_history
+    ) temp
+    WHERE rn &gt; 5
+)
+<!-- 비밀번호 변경 이력 조회  -->
+</delete>
+	<select id="selectPastPasswords" resultType="String">
+    SELECT pw
+    FROM pw_history
+    WHERE id = #{id}
+</select>
+	
 </mapper>

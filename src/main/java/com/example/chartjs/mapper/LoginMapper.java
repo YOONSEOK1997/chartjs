@@ -4,8 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.data.repository.query.Param;
 
 import com.example.chartjs.dto.Member;
+import com.example.chartjs.dto.PwHistory;
 
 @Mapper
 public interface LoginMapper {
@@ -19,5 +21,12 @@ public interface LoginMapper {
 
 	List<Member> selectSleepingMembers();
 
+	void changePw(Member member);
+
+	void insertPwHistory(PwHistory pwHistory);
+
+	void deleteOldPwHistory();
+	
+	List<String> selectPastPasswords(Member member);
 
 }

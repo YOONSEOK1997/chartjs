@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.example.chartjs.dto.Member;
+import com.example.chartjs.dto.PwHistory;
 
 
 
@@ -18,4 +19,10 @@ public interface ILoginService {
 	void changeMemberActiveToOff(String id);
 
 	List<Member> selectSleepingMembers();
+
+	void changePw(Member member);
+	
+	void deleteOldPwHistory();
+
+
 }

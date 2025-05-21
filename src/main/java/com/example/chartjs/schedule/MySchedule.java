@@ -24,8 +24,8 @@ public class MySchedule {
 
     @Autowired
     private LoginService loginService;
-   @Scheduled(cron = "0 * * * * * " ) //test용 매 분 실행
-  //  @Scheduled(cron = "0 59 23 25 * *")
+   
+    @Scheduled(cron = "0 59 23 25 * *")
     public void findSleepingMembers() {
         List<Member> sleepingMembers = loginService.selectSleepingMembers();
 
@@ -41,6 +41,11 @@ public class MySchedule {
             javaMailSender.send(msg);
         }
     }
+    @Scheduled(cron "0 0 0 0 * 1)
+   //@Scheduled(cron ="0 * * * * * ")
+   public void deleteOldPwHistory() {
+	   loginService.deleteOldPwHistory();
+   }
 }
 	//휴면계정으로 만드는 서비스 메서드
 	//메일을 보내는 서비스 메서드

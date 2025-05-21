@@ -47,6 +47,8 @@
             </c:forEach>
         </ul>
     </div>
+    
+    <a href="/changePw">비밀번호변경</a>
 </c:if>
 
 </body>
